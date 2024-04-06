@@ -1,0 +1,70 @@
+<style>
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sentence {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.correctWindow {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: None
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.correct,
+.edit {
+    padding: 5px 10px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.correct:hover,
+.edit:hover {
+    background-color: #eaeaea;
+}
+</style>
+{% extends 'langCorrect/base.html' %}
+{% load static %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        {% for sentence in form %}
+            <div class="wrapper">
+                <div class="sentence">
+                    {{ sentence.0 }}
+                </div>
+                <div class="correctWindow">
+                    {{ sentence.1 }}
+                </div>
+                <div class="footer">
+                    <button type="button" class="correct">Верно</button>
+                    <button type="button" class="edit">Исправить</button>
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit">Отправить</button>
+        </form>
+
+    <script src="{% static 'langCorrect/script.js' %}"></script>
+{% endblock %}
+

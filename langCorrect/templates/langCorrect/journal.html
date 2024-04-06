@@ -1,0 +1,77 @@
+<style>
+.post {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.post-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-head a {
+    text-decoration: none;
+    color: #333;
+}
+
+.timestamp {
+    margin: 0;
+    color: #666;
+}
+
+.post-body {
+    margin-bottom: 10px;
+}
+
+.title {
+    margin: 0;
+    font-size: 20px;
+}
+
+.content {
+    margin: 0;
+    color: #555;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-footer span {
+    color: #777;
+}
+
+.correct-link {
+    text-decoration: none;
+    color: blue;
+}
+</style>
+{% extends 'langCorrect/base.html' %}
+{% block content %}
+
+    {% for post in posts %}
+    <div class="post">
+        <div class="post-head">
+            <a href="{% url 'profile' post.author.username %}" class="author">{{ post.author.username }}</a>
+            <p class="timestamp">{{ post.creation_timestamp | date:"j F Y г." }}</p>
+        </div>
+        <div class="post-body">
+            <h2 class="title">{{ post.verbose_title }}</h2>
+            <h2 class="title">{{ post.title }}</h2>
+            <p class="content">{{ post.text }}</p>
+        </div>
+        <div class="post-footer">
+            <span class="language">{{ post.language }}</span>
+            <span class="corrections">Число исправлений: {{ post.correctionsQuantity }}</span>
+            <a href="{% url 'corrections' post.title %}" class="correct-link">Исправить</a>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock content %}

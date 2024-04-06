@@ -1,0 +1,121 @@
+<style>
+.post {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head a {
+    text-decoration: none;
+    color: #333;
+}
+
+.timestamp {
+    margin: 0;
+    color: #999;
+}
+
+.body {
+    margin-bottom: 10px;
+}
+
+.title {
+    margin: 0;
+    font-size: 20px;
+}
+
+.text {
+    margin: 0;
+    color: #666;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer span {
+    color: #999;
+}
+
+.correct {
+    text-decoration: none;
+    color: blue;
+}
+
+.corrections {
+    margin-top: 20px;
+}
+
+.corrections h3 {
+    margin: 0 0 10px;
+}
+
+.correction {
+    margin-bottom: 20px;
+}
+
+.sentence {
+    margin-left: 20px;
+}
+
+.sentence .original {
+    font-style: italic;
+}
+
+.sentence .corrected {
+    color: green;
+}
+
+.sentence .commentary {
+    color: #999;
+}
+</style>
+{% extends 'langCorrect/base.html' %}
+{% block content %}
+    <div class="post">
+        <div class="head">
+            <a href="{% url 'profile' post.author.username %}" class="author">{{ post.author.username }}</a>
+            <p class="timestamp">{{ post.creation_timestamp | date:"j F Y г." }}</p>
+        </div>
+        <div class="body">
+            <h2 class="title">{{ post.verbose_title }}</h2>
+            <p class="text">{{ post.text }}</p>
+        </div>
+        <div class="footer">
+            <span class="language">{{ post.language }}</span>
+            <span class="corrections">{{ post.correctionsQuantity }}</span>
+            <a href="{% url 'corrections' post.title %}" class="correct">Исправить</a>
+        </div>
+    </div>
+    <div class="corrections">
+        <h3>Исправления</h3>
+        {% for correction in post.correction_set.all %}
+        <div class="correction">
+            <div class="author">{{ correction.author }}</div>
+            {% for sentence in correction.sentence_set.all %}
+            <div class="sentence">
+                <div class="original">Изначальное предложение: {{ sentence.original }}</div>
+                {% if sentence.isCorrect %}
+                <div class="corrected">Все правильно</div>
+                {% else %}
+                <div class="corrected">Исправленная версия: {{ sentence.text }}</div>
+                {% endif %}
+                {% if sentence.commentary %}
+                <div class="commentary">Замечание: {{ sentence.commentary }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+

@@ -1,0 +1,38 @@
+<style>
+    .my-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Стили для кнопки "Сохранить" */
+.my-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.my-button:hover {
+    background-color: #0056b3;
+}
+</style>
+{% extends 'langCorrect/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <form method="POST" class="my-form">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary my-button">Сохранить</button>
+    </form>
+{% endblock content %}

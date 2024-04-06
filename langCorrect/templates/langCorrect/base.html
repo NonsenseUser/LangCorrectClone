@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Навбар</title>
+<style>
+/* Стили для навбара */
+.navbar {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333; /* Цвет фона */
+  overflow: hidden;
+  margin-bottom:10px;
+}
+
+/* Стили для ссылок в навбаре */
+.navbar a {
+  display: block;
+  color: #f2f2f2; /* Цвет текста */
+  text-align: center;
+  padding: 25px 25px; /* Отступы */
+  text-decoration: none; /* Убираем подчеркивание */
+  font-size:20px;
+}
+
+
+/* При наведении курсора на ссылку */
+.navbar a:hover {
+  background-color: #ddd; /* Цвет фона */
+  color: black; /* Изменяем цвет текста */
+
+}
+
+ #write{
+   text-align:right;
+}
+</style>
+</head>
+<body>
+
+<!-- Навбар -->
+<div class="navbar">
+  <a href="#">Начало</a>
+  <a href="#">Подсказки</a>
+  <a href="#">Сообщество</a>
+  <a id="write" href="{% url 'creating_post' %}">Написать</a>
+</div>
+<div>
+
+</div>
+{% block content %}
+{% endblock content %}
+</body>
+</html>
