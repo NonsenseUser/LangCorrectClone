@@ -1,0 +1,21 @@
+{% extends 'langCorrect/base.html' %}
+
+{% block content %}
+
+    <table border="1">
+        <tr rowspan="3">
+            <th>Язык</th>
+            <th>Уровень</th>
+            <th>Действия</th>
+        </tr>
+    {% for languageLevel in languageLevels %}
+        <tr rowspan="3">
+            <td>{{ languageLevel.language }}</td>
+            <td>{{ languageLevel.level }}</td>
+            <td><a href="{% url 'language_delete' languageLevel.language %}"><button>Удалить</button></a>
+                <button>Редактировать</button>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'langCorrect/base.html' %}
+{% block content %}
+<div style = 'display: flex'>
+    <div >
+        <div>{{ user.username }}</div>
+        <div>
+            <div>Языки</div>
+            {% for language in languages %}
+            <div>{{ language.language }} ({{ language.level }})</div>
+            {% endfor %}
+        </div>
+        <div>
+            <div><button>Языки</button></div>
+            <div><button>Пароль</button></div>
+        </div>
+    </div>
+    <div>
+        {% for post in posts %}
+        <div class="post">
+            <div class="post-head">
+                <a href="{% url 'profile' post.author.username %}" class="author">{{ post.author.username }}</a>
+                <p class="timestamp">{{ post.creation_timestamp | date:"j F Y г." }}</p>
+            </div>
+            <div class="post-body">
+                <h2 class="title">{{ post.verbose_title }}</h2>
+                <h2 class="title">{{ post.title }}</h2>
+                <p class="content">{{ post.text }}</p>
+            </div>
+            <div class="post-footer">
+                <span class="language">{{ post.language }}</span>
+                <span class="corrections">Число исправлений: {{ post.correctionsQuantity }}</span>
+                <a href="{% url 'corrections' post.title %}" class="correct-link">Исправить</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content%}

@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from django import forms
-from .models import Post, LanguageLevel, Correction, Sentence
+from .models import Post, LanguageLevel, Correction, Sentence, CustomUser
 from django.views.generic.detail import DetailView
 from .forms import CustomUserCreationForm, LanguageForm, Language, CorrectSentence
 
@@ -12,7 +12,6 @@ def signup(request):
     if request.method == 'POST':
         user_form = CustomUserCreationForm(request.POST)
         language_form = LanguageForm(request.POST)
-        print('Досюда работает 0')
         if user_form.is_valid() and language_form.is_valid():
             print('Досюда работает')
             user = user_form.save()
@@ -100,5 +99,26 @@ def corrections(request, post_title):
 
         return render(request, 'langCorrect/corrections.html', context={'content': content, 'form': forms})
 
+
+def profile(request, username):
+    user = CustomUser.objects.get(username=username)
+    languages = LanguageLevel.objects.filter(student=user)
+    posts = user.post_set.all()
+    return render(request, 'langCorrect/profile.html', context={'user': user, 'languages': languages,                                                             'posts': posts})
+
+
+class LanguageList(ListView):
+    model = LanguageLevel
+    context_object_name = 'languageLevels'
+    template_name = 'langCorrect/languageList.html'
+
+    def get_queryset(self):
+        return LanguageLevel.objects.filter(student=self.request.user)
+
+
+class DeleteLanguage(DeleteView):
+    model = LanguageLevel
+    template_name = 'langCorrect/deleteLanguage.html'
+    context_object_name = 'language'
 
 

@@ -1,0 +1,12 @@
+{% extends 'langCorrect/base.html' %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <h2>Вы уверены, что хотите удалить {{ language.language }} ({{ language.level }}) из вашего списка языков</h2>
+        <div>
+            <button type="submit">Удалить</button>
+            <button>Отмена</button>
+        </div>
+    </form>
+{% endblock content %}

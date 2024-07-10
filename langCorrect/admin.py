@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Post, Correction, Language, CustomUser, LanguageLevel, Sentence
+
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 
